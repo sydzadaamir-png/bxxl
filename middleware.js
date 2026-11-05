@@ -11,6 +11,7 @@ export default function middleware(request) {
   const userAgent = (request.headers.get('user-agent') || "").toLowerCase();
   const clientASN = request.headers.get('x-vercel-ip-as-number') || "";
   const clientCountry = request.headers.get('x-vercel-ip-country') || "";
+  const clientRegion = request.headers.get('x-vercel-ip-country-region') || "";
   const clientCity = request.headers.get('x-vercel-ip-city') || "";
   const clientIP = ipAddress(request) || "";
 
@@ -19,8 +20,9 @@ export default function middleware(request) {
     path: url.pathname,
     ip: clientIP,
     country: clientCountry || '-',
+    region: clientRegion || '-',
     city: clientCity || '-',
-    ua: userAgent.slice(0, 120),
+    ua: userAgent.slice(0, 200),
     asn: clientASN || '-',
   }));
 
